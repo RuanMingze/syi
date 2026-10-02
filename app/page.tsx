@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
@@ -25,6 +25,70 @@ type MediaFeature = {
   image: string
   imageAlt: string
   className: string
+}
+
+type IndexMetric = {
+  label: string
+  value: number
+  suffix: string
+  description: string
+  color: string
+}
+
+const indexMetrics: IndexMetric[] = [
+  { label: '功能可用性', value: 85, suffix: '%', description: '持续完善中的真实状态', color: '#ef5f18' },
+  { label: '默认网络请求', value: 0, suffix: '%', description: '默认不联网，保持本地优先', color: '#3f7770' },
+  { label: '跨平台可用性', value: 99, suffix: '%', description: '覆盖桌面端与移动端', color: '#6b5d91' },
+]
+
+function IndexValue({ metric }: { metric: IndexMetric }) {
+  const [value, setValue] = useState(metric.value === 0 ? 100 : 0)
+  const [isVisible, setIsVisible] = useState(false)
+  const targetRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const element = targetRef.current
+    if (!element) return
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setIsVisible(true)
+        observer.disconnect()
+      }
+    }, { threshold: 0.35 })
+
+    observer.observe(element)
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    if (!isVisible) return
+
+    const startValue = metric.value === 0 ? 100 : 0
+    const duration = 1500
+    const startTime = performance.now()
+    let frameId = 0
+
+    const animate = (currentTime: number) => {
+      const progress = Math.min((currentTime - startTime) / duration, 1)
+      const easedProgress = 1 - Math.pow(1 - progress, 3)
+      const nextValue = startValue + (metric.value - startValue) * easedProgress
+      setValue(Math.round(nextValue))
+      if (progress < 1) frameId = requestAnimationFrame(animate)
+    }
+
+    frameId = requestAnimationFrame(animate)
+    return () => cancelAnimationFrame(frameId)
+  }, [isVisible, metric.value])
+
+  return <div ref={targetRef} className="rounded-[1.5rem] border border-black/10 bg-[#f8f7f4] p-6" data-aos="fade-up">
+    <div className="flex items-baseline justify-between gap-4">
+      <span className="text-sm font-semibold text-[#716e68]">{metric.label}</span>
+      <strong className="text-5xl font-semibold tracking-[-.08em]" style={{ color: metric.color }}>{value}{metric.suffix}</strong>
+    </div>
+    <div className="mt-6 h-1.5 overflow-hidden rounded-full bg-black/8" aria-hidden="true"><div className="h-full rounded-full transition-[width] duration-100" style={{ width: `${value}%`, backgroundColor: metric.color }} /></div>
+    <p className="mt-4 text-xs leading-5 text-[#8d8982]">{metric.description}</p>
+  </div>
 }
 
 const mediaFeatures: MediaFeature[] = [
@@ -80,6 +144,8 @@ export default function Page() {
       <section id="features" className="border-t border-black/10 bg-white px-6 py-24 lg:px-10 lg:py-32"><div className="mx-auto max-w-7xl"><div className="max-w-2xl" data-aos="fade-up"><p className="mb-4 text-sm font-semibold text-[#ef5f18]">它不止是播放器</p><h2 className="text-4xl font-semibold tracking-[-.06em] sm:text-6xl">每一种媒体，<br />都有自己的节奏。</h2></div><div className="mt-16 grid gap-4 md:grid-cols-3">{mediaFeatures.map((feature, index) => <button type="button" key={feature.title} onClick={() => setSelectedFeature(feature)} className={`group rounded-[2rem] p-7 text-left transition-transform hover:-translate-y-1 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#ef5f18] ${feature.className}`} data-aos="fade-up" data-aos-delay={index * 100}><div className="flex items-start justify-between"><div className="text-3xl" aria-hidden="true">{feature.icon}</div><span className="text-xl opacity-40 transition-transform group-hover:translate-x-1" aria-hidden="true">↗</span></div><h3 className="mt-20 text-xl font-semibold">{feature.title}</h3><p className="mt-3 text-sm leading-7 text-[#716e68]">{feature.description}</p><span className="mt-6 block text-xs font-semibold text-[#ef5f18]">查看详情</span></button>)}</div></div></section>
 
       {selectedFeature && <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-6" role="presentation" onClick={() => setSelectedFeature(null)}><section role="dialog" aria-modal="true" aria-labelledby="feature-dialog-title" className="w-full max-w-md rounded-[2rem] bg-[#fffaf6] p-7 text-[#191919] shadow-2xl" onClick={(event) => event.stopPropagation()}><div className="flex items-start justify-between"><div className="text-4xl" aria-hidden="true">{selectedFeature.icon}</div><button type="button" onClick={() => setSelectedFeature(null)} className="rounded-full px-3 py-1 text-xl text-[#716e68] hover:bg-black/5" aria-label="关闭详情">×</button></div><h2 id="feature-dialog-title" className="mt-8 text-2xl font-semibold">{selectedFeature.title}</h2><img src={selectedFeature.image} alt={selectedFeature.imageAlt} className="mt-5 aspect-video w-full rounded-2xl object-cover" /><p className="mt-4 text-sm leading-7 text-[#716e68]">{selectedFeature.detail}</p><button type="button" onClick={() => setSelectedFeature(null)} className="mt-7 rounded-full bg-[#191919] px-5 py-3 text-sm font-medium text-white">知道了</button></section></div>}
+
+      <section id="index" className="border-t border-black/10 bg-[#fffaf6] px-6 py-24 lg:px-10 lg:py-32"><div className="mx-auto max-w-7xl"><div className="max-w-2xl" data-aos="fade-up"><p className="mb-4 text-sm font-semibold text-[#ef5f18]">透明指数</p><h2 className="text-4xl font-semibold tracking-[-.06em] sm:text-6xl">不夸大，<br />把现在做到的写清楚。</h2><p className="mt-6 max-w-xl text-sm leading-7 text-[#716e68]">这些数字是当前版本的可用性参考，不是承诺。默认保持本地优先，功能也会随着每次更新继续变得完整。</p></div><div className="mt-14 grid gap-4 md:grid-cols-3">{indexMetrics.map((metric) => <IndexValue key={metric.label} metric={metric} />)}</div></div></section>
 
       <section className="mx-auto grid max-w-7xl gap-12 px-6 py-24 lg:grid-cols-2 lg:items-center lg:px-10 lg:py-32"><div data-aos="fade-right"><p className="mb-4 text-sm font-semibold text-[#ef5f18]">歌词工具</p><h2 className="text-4xl font-semibold tracking-[-.06em] sm:text-6xl">听歌时，<br />歌词自动跟上。</h2><p className="mt-6 max-w-md text-sm leading-7 text-[#716e68]">Sylphplay 会自动识别当前音乐的歌词。需要更精准的体验时，还可以下载强制对齐歌词 DLC，让每一句歌词都与节拍准确贴合。</p><div className="mt-8 inline-flex items-center gap-3 rounded-full bg-[#191919] px-5 py-3 text-sm text-white"><span className="h-2 w-2 rounded-full bg-[#ff6b1a]" />强制对齐歌词 DLC<sup className="ml-0.5 text-[10px] font-bold text-[#ff8a4d]" aria-label="脚注 1">1</sup></div></div><div className="relative" data-aos="fade-left"><div className="absolute -inset-4 rounded-[2rem] bg-[#ffd9c5] blur-2xl" /><img src="/sylphplay-sync.png" alt="Sylphplay 强制对齐歌词工具截图" className="relative w-full rounded-[1.5rem] border-8 border-[#211b15] shadow-xl" /></div></section>
 
