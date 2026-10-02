@@ -38,7 +38,7 @@ type IndexMetric = {
 const indexMetrics: IndexMetric[] = [
   { label: '功能可用性', value: 85, suffix: '%', description: '持续完善中的真实状态', color: '#ef5f18' },
   { label: '默认网络请求', value: 0, suffix: '%', description: '默认不联网，保持本地优先', color: '#3f7770' },
-  { label: '跨平台可用性', value: 99, suffix: '%', description: '覆盖桌面端与移动端', color: '#6b5d91' },
+  { label: '跨平台可用性', value: 92, suffix: '%', description: '覆盖桌面端与移动端', color: '#6b5d91' },
 ]
 
 function IndexValue({ metric }: { metric: IndexMetric }) {
