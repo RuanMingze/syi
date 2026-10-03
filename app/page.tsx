@@ -185,13 +185,16 @@ export default function Page() {
     null
   );
   const [mediaIndex, setMediaIndex] = useState(0);
+  const [previousMediaIndex, setPreviousMediaIndex] = useState<number | null>(null);
   const mediaTypes = ["图片", "音乐", "视频"];
   useEffect(() => {
     const intervalId = window.setInterval(() => {
+      setPreviousMediaIndex(mediaIndex);
       setMediaIndex((currentIndex) => (currentIndex + 1) % mediaTypes.length);
+      window.setTimeout(() => setPreviousMediaIndex(null), 520);
     }, 2200);
     return () => window.clearInterval(intervalId);
-  }, [mediaTypes.length]);
+  }, [mediaIndex, mediaTypes.length]);
   useEffect(() => {
     AOS.init({
       duration: 750,
@@ -201,7 +204,23 @@ export default function Page() {
     });
   }, []);
   return (
-    <main className="min-h-screen overflow-hidden bg-[#f5f3ef] text-[#151515]">
+    <>
+      <style jsx>{`
+        @keyframes media-enter {
+          from { opacity: 0; transform: translateY(70%); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes media-exit {
+          from { opacity: 1; transform: translateY(0); }
+          to { opacity: 0; transform: translateY(-70%); }
+        }
+        .media-enter { animation: media-enter 520ms cubic-bezier(.22, 1, .36, 1) both; }
+        .media-exit { animation: media-exit 520ms cubic-bezier(.22, 1, .36, 1) both; }
+        @media (prefers-reduced-motion: reduce) {
+          .media-enter, .media-exit { animation: none; }
+        }
+      `}</style>
+      <main className="min-h-screen overflow-hidden bg-[#f5f3ef] text-[#151515]">
       <nav
         className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 lg:px-10"
         data-aos="fade-down"
@@ -268,14 +287,21 @@ export default function Page() {
             <span className="h-2 w-2 rounded-full bg-[#ff6b1a]" />
             Media, made simple
           </div>
-          <h1 className="max-w-xl text-6xl font-semibold leading-[.94] tracking-[-.08em] sm:text-7xl lg:text-[6.4rem]">
+          <h1 className="max-w-xl text-5xl font-semibold leading-[.94] tracking-[-.07em] sm:text-6xl lg:text-[5.2rem]">
             所有
             <span
-              className="inline-block min-w-[2em] text-[#ef5f18]"
+              className="relative inline-block min-w-[2em] text-[#ef5f18]"
               aria-live="polite"
               aria-atomic="true"
             >
-              {mediaTypes[mediaIndex]}
+              {previousMediaIndex !== null && (
+                <span className="media-exit absolute inset-0" aria-hidden="true">
+                  {mediaTypes[previousMediaIndex]}
+                </span>
+              )}
+              <span key={mediaIndex} className="media-enter inline-block">
+                {mediaTypes[mediaIndex]}
+              </span>
             </span>
             ，
             <br />
@@ -780,6 +806,7 @@ export default function Page() {
           </p>
         </div>
       </footer>
-    </main>
+      </main>
+    </>
   );
 }
