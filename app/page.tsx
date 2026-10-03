@@ -184,6 +184,14 @@ export default function Page() {
   const [selectedFeature, setSelectedFeature] = useState<MediaFeature | null>(
     null
   );
+  const [mediaIndex, setMediaIndex] = useState(0);
+  const mediaTypes = ["图片", "音乐", "视频"];
+  useEffect(() => {
+    const intervalId = window.setInterval(() => {
+      setMediaIndex((currentIndex) => (currentIndex + 1) % mediaTypes.length);
+    }, 2200);
+    return () => window.clearInterval(intervalId);
+  }, [mediaTypes.length]);
   useEffect(() => {
     AOS.init({
       duration: 750,
@@ -261,7 +269,15 @@ export default function Page() {
             Media, made simple
           </div>
           <h1 className="max-w-xl text-6xl font-semibold leading-[.94] tracking-[-.08em] sm:text-7xl lg:text-[6.4rem]">
-            所有媒体，
+            所有
+            <span
+              className="inline-block min-w-[2em] text-[#ef5f18]"
+              aria-live="polite"
+              aria-atomic="true"
+            >
+              {mediaTypes[mediaIndex]}
+            </span>
+            ，
             <br />
             <em className="not-italic text-[#ef5f18]">一处播放。</em>
           </h1>
