@@ -287,7 +287,7 @@ export default function Page() {
             <span className="h-2 w-2 rounded-full bg-[#ff6b1a]" />
             Media, made simple
           </div>
-          <h1 className="max-w-xl text-5xl font-semibold leading-[.94] tracking-[-.07em] sm:text-6xl lg:text-[5.2rem]">
+          <h1 className="max-w-xl text-5xl font-semibold leading-[1.08] tracking-[-.07em] sm:text-6xl lg:text-[5.2rem]">
             所有
             <span
               className="relative inline-block min-w-[2em] text-[#ef5f18]"

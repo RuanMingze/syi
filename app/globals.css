@@ -163,5 +163,26 @@
   }
   html {
     scroll-behavior: smooth;
+    scrollbar-color: #ef5f18 #f5f3ef;
+    scrollbar-width: thin;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #f5f3ef;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border: 3px solid #f5f3ef;
+    border-radius: 999px;
+    background: #ef5f18;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #d94f12;
   }
 }
