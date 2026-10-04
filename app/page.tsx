@@ -778,12 +778,14 @@ export default function Page() {
             >
               Releases ↗
             </a>
-            <Link
-              href="/developer"
+            <a
+              href="https://github.com/RuanMingze/Sylphplay/wiki"
+              target="_blank"
+              rel="noreferrer"
               className="rounded-full bg-white/10 px-5 py-2.5 font-medium text-white transition-colors hover:bg-white hover:text-[#191919]"
             >
-              开发者文档
-            </Link>
+              文档 ↗
+            </a>
           </span>
         </div>
         <div className="flex flex-col gap-2 border-t border-white/10 pt-5 text-xs leading-5 text-white/40">
