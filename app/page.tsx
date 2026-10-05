@@ -549,7 +549,7 @@ export default function Page() {
                 </span>
                 <strong className="mt-10 block text-lg">{name}</strong>
                 <span className="mt-1 block text-xs opacity-60">
-                  {meta} · v1.0.0
+                  {meta} · v1.0.2
                   {note && (
                     <sup className="ml-1 font-bold" aria-label={`脚注 ${note}`}>
                       {note}
