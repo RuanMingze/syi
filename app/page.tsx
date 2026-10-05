@@ -8,31 +8,31 @@ const downloads = [
   [
     "Windows",
     "x64",
-    "https://gh-proxy.com/https://github.com/RuanMingze/Sylphplay/releases/download/v1.0.0/Sylphplay-1.0.0-Windows-x64-Setup.exe",
+    "https://gh-proxy.com/https://github.com/RuanMingze/Sylphplay/releases/download/v1.0.2/Sylphplay-1.0.2-Windows-x64-Setup.exe",
     "",
   ],
   [
     "macOS",
     "x64",
-    "https://gh-proxy.com/https://github.com/RuanMingze/Sylphplay/releases/download/v1.0.0/Sylphplay-1.0.0-macOS-x64-Setup.dmg",
+    "https://gh-proxy.com/https://github.com/RuanMingze/Sylphplay/releases/download/v1.0.2/Sylphplay-1.0.2-macOS-x64-Setup.dmg",
     "",
   ],
   [
     "Linux",
     "x64",
-    "https://gh-proxy.com/https://github.com/RuanMingze/Sylphplay/releases/download/v1.0.0/Sylphplay-1.0.0-Linux-x64-Setup.deb",
+    "https://gh-proxy.com/https://github.com/RuanMingze/Sylphplay/releases/download/v1.0.2/Sylphplay-1.0.2-Linux-x64-Setup.deb",
     "3",
   ],
   [
     "Android",
     "APK",
-    "https://gh-proxy.com/https://github.com/RuanMingze/Sylphplay/releases/download/v1.0.0/Sylphplay-1.0.0-Android.apk",
+    "https://gh-proxy.com/https://github.com/RuanMingze/Sylphplay/releases/download/v1.0.2/Sylphplay-1.0.2-Android.apk",
     "",
   ],
   [
     "iOS",
     "IPA",
-    "https://gh-proxy.com/https://github.com/RuanMingze/Sylphplay/releases/download/v1.0.0/Sylphplay-1.0.0-iOS.ipa",
+    "https://gh-proxy.com/https://github.com/RuanMingze/Sylphplay/releases/download/v1.0.2/Sylphplay-1.0.2-iOS.ipa",
     "4",
   ],
 ];
