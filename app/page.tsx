@@ -121,8 +121,7 @@ const mediaFeatures: MediaFeature[] = [
     title: "沉浸式音乐",
     description: "自动识别歌词，让音乐不只被听见，也被看见。",
     detail: "支持歌词同步、播放速度与音量调节，让每一次聆听都保持自己的节奏。",
-    image:
-      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/%E9%9F%B3%E9%A2%91%E6%88%AA%E5%9B%BE-Usa6R732abv1gh0BNJDK8IvurXY2dW.png",
+    image: "/music.png",
     imageAlt: "Sylphplay 音乐歌词播放界面",
     className: "bg-[#fff1e8]",
   },
@@ -131,8 +130,7 @@ const mediaFeatures: MediaFeature[] = [
     title: "流畅视频",
     description: "打开即播，清晰呈现每一帧画面与声音。",
     detail: "专注于播放本身，支持全屏观看、进度控制与常用视频格式。",
-    image:
-      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/%E8%A7%86%E9%A2%91%E6%88%AA%E5%9B%BE-0YYOAZdpJnz7ND1cCAzzniqWnu6wXH.png",
+    image: "/video.png",
     imageAlt: "Sylphplay 视频播放界面",
     className: "bg-[#f2f0eb]",
   },
@@ -141,8 +139,7 @@ const mediaFeatures: MediaFeature[] = [
     title: "自由浏览图片",
     description: "用更大的视野查看、切换和欣赏你的图片。",
     detail: "沉浸式查看图片，支持缩放、切换与鹰眼图导航，浏览过程清晰顺手。",
-    image:
-      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/%E7%9C%8B%E5%9B%BE%E6%88%AA%E5%9B%BE-jrzUCtCeHOq6nKp1futDjEoqPNDjQt.png",
+    image: "/image-viewer.png",
     imageAlt: "Sylphplay 图片浏览界面",
     className: "bg-[#e9f0f2]",
   },
