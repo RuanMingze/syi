@@ -514,9 +514,6 @@ export default function Page() {
             >
               GitHub Releases
             </a>
-            <span className="text-sm text-white/70">
-              v1.0.2 · Windows x64 / 32-bit · macOS Intel / Apple Silicon · Linux deb / rpm / AppImage · Android · iOS
-            </span>
           </div>
         </div>
       </section>
