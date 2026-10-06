@@ -7,6 +7,7 @@ export const metadata: Metadata = {
 };
 
 const RELEASES_URL = "https://github.com/RuanMingze/Sylphplay/releases";
+
 const GH = (path: string) =>
   `https://gh-proxy.com/https://github.com/RuanMingze/Sylphplay/releases/download/v1.0.2/${path}`;
 
@@ -112,29 +113,28 @@ function PlatformCard({ p }: { p: Platform }) {
   return (
     <section
       id={p.id}
-      className="group relative rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur transition hover:border-white/20 hover:bg-white/10"
+      className="group relative rounded-2xl border border-black/10 bg-white p-6 transition hover:border-black/20 hover:shadow-lg"
     >
       <header className="mb-5 flex items-start justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-bold text-white">{p.name}</h2>
-          <p className="mt-1 text-sm text-white/50">{p.subtitle}</p>
+          <h2 className="text-2xl font-bold tracking-tight">{p.name}</h2>
+          <p className="mt-1 text-sm text-[#716e68]">{p.subtitle}</p>
         </div>
         {p.badge && (
-          <span className="shrink-0 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-medium text-white/70">
+          <span className="shrink-0 rounded-full border border-black/10 bg-[#f5f3ef] px-3 py-1 text-xs font-medium text-[#716e68]">
             {p.badge}
           </span>
         )}
       </header>
-
       <a
         href={p.main.url}
-        className="block rounded-xl bg-white px-5 py-4 text-left text-[#151515] transition hover:bg-white/90"
+        className="block rounded-xl bg-[#191919] px-5 py-4 text-left text-white transition hover:bg-[#333]"
       >
         <div className="flex items-center justify-between gap-3">
           <div>
             <div className="text-sm font-semibold">{p.main.label}</div>
             {p.main.suffix && (
-              <div className="mt-0.5 text-xs text-[#151515]/60">
+              <div className="mt-0.5 text-xs text-white/60">
                 {p.main.suffix}
               </div>
             )}
@@ -144,18 +144,17 @@ function PlatformCard({ p }: { p: Platform }) {
           </span>
         </div>
       </a>
-
       {p.extras && p.extras.length > 0 && (
         <ul className="mt-3 space-y-2">
           {p.extras.map((e) => (
             <li key={e.label}>
               <a
                 href={e.url}
-                className="flex items-center justify-between gap-3 rounded-lg border border-white/10 bg-white/0 px-4 py-2.5 text-sm text-white/70 transition hover:border-white/20 hover:bg-white/10 hover:text-white"
+                className="flex items-center justify-between gap-3 rounded-lg border border-black/10 bg-white px-4 py-2.5 text-sm text-[#716e68] transition hover:border-black/20 hover:bg-[#faf9f7] hover:text-[#151515]"
               >
                 <span>{e.label}</span>
                 {e.suffix && (
-                  <span className="shrink-0 text-xs text-white/45">
+                  <span className="shrink-0 text-xs text-[#8d8982]">
                     {e.suffix}
                   </span>
                 )}
@@ -164,9 +163,8 @@ function PlatformCard({ p }: { p: Platform }) {
           ))}
         </ul>
       )}
-
       {p.note && (
-        <p className="mt-4 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-xs leading-relaxed text-white/45">
+        <p className="mt-4 rounded-lg border border-black/10 bg-[#faf9f7] px-3 py-2 text-xs leading-relaxed text-[#8d8982]">
           {p.note}
         </p>
       )}
@@ -176,20 +174,19 @@ function PlatformCard({ p }: { p: Platform }) {
 
 export default function DownloadPage() {
   return (
-    <main className="min-h-screen bg-black text-white">
-      {/* 顶栏 */}
-      <header className="sticky top-0 z-10 border-b border-white/10 bg-black/70 backdrop-blur">
+    <main className="min-h-screen bg-[#f5f3ef] text-[#151515]">
+      <header className="sticky top-0 z-10 border-b border-black/10 bg-[#f5f3ef]/80 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
           <Link href="/" className="text-lg font-bold tracking-tight">
             Sylphplay
           </Link>
-          <nav className="flex items-center gap-5 text-sm text-white/60">
-            <Link href="/" className="hover:text-white">
+          <nav className="flex items-center gap-5 text-sm text-[#716e68]">
+            <Link href="/" className="hover:text-[#151515]">
               返回首页
             </Link>
             <a
               href={RELEASES_URL}
-              className="hover:text-white"
+              className="hover:text-[#151515]"
               target="_blank"
               rel="noreferrer"
             >
@@ -198,20 +195,19 @@ export default function DownloadPage() {
           </nav>
         </div>
       </header>
-
       <div className="mx-auto max-w-6xl px-6 py-14">
         <div className="mb-12">
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
             下载 Sylphplay
           </h1>
-          <p className="mt-3 max-w-2xl text-white/55">
+          <p className="mt-3 max-w-2xl text-[#6c6964]">
             最新版本 v1.0.2，跨平台多媒体播放器。所有构建产物均通过 GitHub Actions
             自动打包，签名 / 未签名状态已在下方标注。
           </p>
-          <p className="mt-2 text-xs text-white/40">
+          <p className="mt-2 text-xs text-[#8d8982]">
             下载链接使用 gh-proxy 加速；若节点不可用，可在{" "}
             <a
-              className="underline hover:text-white/60"
+              className="underline hover:text-[#151515]"
               href={RELEASES_URL}
               target="_blank"
               rel="noreferrer"
@@ -221,57 +217,51 @@ export default function DownloadPage() {
             直接下载。
           </p>
         </div>
-
-        {/* 平台速查 tabs */}
         <nav className="mb-10 flex flex-wrap gap-2">
           {platforms.map((p) => (
             <a
               key={p.id}
               href={`#${p.id}`}
-              className="rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-sm text-white/70 transition hover:border-white/20 hover:bg-white/10 hover:text-white"
+              className="rounded-full border border-black/10 bg-white px-4 py-1.5 text-sm text-[#716e68] transition hover:border-black/20 hover:bg-[#faf9f7] hover:text-[#151515]"
             >
               {p.name}
             </a>
           ))}
         </nav>
-
         <div className="grid gap-5 md:grid-cols-2">
           {platforms.map((p) => (
             <PlatformCard key={p.id} p={p} />
           ))}
         </div>
-
-        {/* 统一脚注 */}
-        <footer className="mt-14 rounded-xl border border-white/10 bg-white/[0.03] p-6 text-sm text-white/50">
+        <footer className="mt-14 rounded-xl border border-black/10 bg-white p-6 text-sm text-[#716e68]">
           <ul className="space-y-2">
             <li>
-              <span className="mr-2 font-semibold text-white/65">•</span>
+              <span className="mr-2 font-semibold text-[#151515]">•</span>
               图片预览中的鹰眼图功能需在设置里手动开启。
             </li>
             <li>
-              <span className="mr-2 font-semibold text-white/65">•</span>
+              <span className="mr-2 font-semibold text-[#151515]">•</span>
               32 位 Windows 版本暂不提供强制对齐 DLC / 默认打开方式功能。
             </li>
             <li>
-              <span className="mr-2 font-semibold text-white/65">•</span>
+              <span className="mr-2 font-semibold text-[#151515]">•</span>
               Linux 三种安装包任选其一；AppImage 通吃主流发行版，deb / rpm
               适合系统包管理器生态。
             </li>
             <li>
-              <span className="mr-2 font-semibold text-white/65">•</span>
+              <span className="mr-2 font-semibold text-[#151515]">•</span>
               iOS 安装包为未签名 IPA，需借助 AltStore / Sideloadly
               等工具重签名后侧载安装。
             </li>
           </ul>
         </footer>
-
-        <div className="mt-10 flex items-center justify-between text-xs text-white/35">
+        <div className="mt-10 flex items-center justify-between text-xs text-[#8d8982]">
           <span>Sylphplay · Ruanftrix</span>
           <a
             href={RELEASES_URL}
             target="_blank"
             rel="noreferrer"
-            className="hover:text-white/55"
+            className="hover:text-[#716e68]"
           >
             查看全部 Releases ↗
           </a>
