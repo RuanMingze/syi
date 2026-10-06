@@ -1,10 +1,7 @@
-import type { Metadata } from "next";
-import Link from "next/link";
+"use client";
 
-export const metadata: Metadata = {
-  title: "下载 — Sylphplay",
-  description: "下载 Sylphplay 各平台最新版本。Windows / macOS / Linux / Android / iOS。",
-};
+import { useEffect, useState } from "react";
+import Link from "next/link";
 
 const RELEASES_URL = "https://github.com/RuanMingze/Sylphplay/releases";
 
@@ -109,22 +106,55 @@ const platforms: Platform[] = [
   },
 ];
 
-function PlatformCard({ p }: { p: Platform }) {
+function detectOS(): string | null {
+  if (typeof navigator === "undefined") return null;
+  const ua = navigator.userAgent;
+  const platform = navigator.platform || "";
+
+  if (/Win32|Win64|Windows/i.test(ua)) return "windows";
+  if (/iPhone|iPod/i.test(ua)) return "ios";
+  if (/iPad/i.test(ua)) return "ios";
+  if (platform === "MacIntel" && navigator.maxTouchPoints > 1) return "ios";
+  if (/Macintosh|Mac OS X/i.test(ua)) return "macos";
+  if (/Android/i.test(ua)) return "android";
+  if (/Linux|X11/i.test(ua)) return "linux";
+
+  return null;
+}
+
+function PlatformCard({
+  p,
+  recommended,
+}: {
+  p: Platform;
+  recommended: boolean;
+}) {
   return (
     <section
       id={p.id}
-      className="group relative rounded-2xl border border-black/10 bg-white p-6 transition hover:border-black/20 hover:shadow-lg"
+      className={`group relative rounded-2xl border bg-white p-6 transition hover:shadow-lg ${
+        recommended
+          ? "border-[#ef5f18]/40"
+          : "border-black/10 hover:border-black/20"
+      }`}
     >
       <header className="mb-5 flex items-start justify-between gap-4">
         <div>
           <h2 className="text-2xl font-bold tracking-tight">{p.name}</h2>
           <p className="mt-1 text-sm text-[#716e68]">{p.subtitle}</p>
         </div>
-        {p.badge && (
-          <span className="shrink-0 rounded-full border border-black/10 bg-[#f5f3ef] px-3 py-1 text-xs font-medium text-[#716e68]">
-            {p.badge}
-          </span>
-        )}
+        <div className="flex shrink-0 flex-col items-end gap-2">
+          {recommended && (
+            <span className="rounded-full bg-[#ef5f18] px-3 py-1 text-xs font-medium text-white">
+              适合您的系统
+            </span>
+          )}
+          {p.badge && (
+            <span className="rounded-full border border-black/10 bg-[#f5f3ef] px-3 py-1 text-xs font-medium text-[#716e68]">
+              {p.badge}
+            </span>
+          )}
+        </div>
       </header>
       <a
         href={p.main.url}
@@ -173,6 +203,12 @@ function PlatformCard({ p }: { p: Platform }) {
 }
 
 export default function DownloadPage() {
+  const [currentOS, setCurrentOS] = useState<string | null>(null);
+
+  useEffect(() => {
+    setCurrentOS(detectOS());
+  }, []);
+
   return (
     <main className="min-h-screen bg-[#f5f3ef] text-[#151515]">
       <header className="sticky top-0 z-10 border-b border-black/10 bg-[#f5f3ef]/80 backdrop-blur">
@@ -197,8 +233,12 @@ export default function DownloadPage() {
       </header>
       <div className="mx-auto max-w-6xl px-6 py-14">
         <div className="mb-12">
+          <div className="mb-7 flex items-center gap-2 text-xs font-semibold uppercase tracking-[.2em] text-[#77736d]">
+            <span className="h-2 w-2 rounded-full bg-[#ff6b1a]" />
+            Download
+          </div>
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-            下载 Sylphplay
+            下载 <span className="text-[#ef5f18]">Sylphplay</span>
           </h1>
           <p className="mt-3 max-w-2xl text-[#6c6964]">
             最新版本 v1.0.2，跨平台多媒体播放器。所有构建产物均通过 GitHub Actions
@@ -230,7 +270,11 @@ export default function DownloadPage() {
         </nav>
         <div className="grid gap-5 md:grid-cols-2">
           {platforms.map((p) => (
-            <PlatformCard key={p.id} p={p} />
+            <PlatformCard
+              key={p.id}
+              p={p}
+              recommended={currentOS === p.id}
+            />
           ))}
         </div>
         <footer className="mt-14 rounded-xl border border-black/10 bg-white p-6 text-sm text-[#716e68]">
