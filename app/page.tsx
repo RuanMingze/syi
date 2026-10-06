@@ -12,6 +12,18 @@ const downloads = [
     "",
   ],
   [
+    "Windows",
+    "ia32",
+    "https://gh-proxy.com/https://github.com/RuanMingze/Sylphplay/releases/download/v1.0.2/Sylphplay-1.0.2-Windows-ia32-Setup.exe",
+    "2",
+  ],
+  [
+    "macOS",
+    "arm64",
+    "https://gh-proxy.com/https://github.com/RuanMingze/Sylphplay/releases/download/v1.0.2/Sylphplay-1.0.2-macOS-arm64-Setup.dmg",
+    "",
+  ],
+  [
     "macOS",
     "x64",
     "https://gh-proxy.com/https://github.com/RuanMingze/Sylphplay/releases/download/v1.0.2/Sylphplay-1.0.2-macOS-x64-Setup.dmg",
@@ -19,8 +31,20 @@ const downloads = [
   ],
   [
     "Linux",
-    "x64",
-    "https://gh-proxy.com/https://github.com/RuanMingze/Sylphplay/releases/download/v1.0.2/Sylphplay-1.0.2-Linux-x64-Setup.deb",
+    "deb",
+    "https://gh-proxy.com/https://github.com/RuanMingze/Sylphplay/releases/download/v1.0.2/Sylphplay-1.0.2-Linux-amd64-linux.deb",
+    "3",
+  ],
+  [
+    "Linux",
+    "rpm",
+    "https://gh-proxy.com/https://github.com/RuanMingze/Sylphplay/releases/download/v1.0.2/Sylphplay-1.0.2-Linux-x86_64-linux.rpm",
+    "3",
+  ],
+  [
+    "Linux",
+    "AppImage",
+    "https://gh-proxy.com/https://github.com/RuanMingze/Sylphplay/releases/download/v1.0.2/Sylphplay-1.0.2-Linux-x86_64-linux.AppImage",
     "3",
   ],
   [
@@ -795,11 +819,11 @@ export default function Page() {
           </p>
           <p>
             <span className="mr-2 font-semibold text-white/65">2：</span>
-            目前电脑端暂时只支持 64 位系统。
+            Windows 32 位暂不提供强制对齐 DLC / 默认打开方式功能（.NET 10 已砍 win-x86 RID）。
           </p>
           <p>
-            <span className="mr-2 font-semibold text-white/65">3：</span>Linux
-            目前仅提供 deb 安装包，暂不提供 AppImage 等其它格式。
+            <span className="mr-2 font-semibold text-white/65">3：</span>
+            Linux 提供 deb / rpm / AppImage 三种安装包，按需选择。
           </p>
           <p>
             <span className="mr-2 font-semibold text-white/65">4：</span>iOS
