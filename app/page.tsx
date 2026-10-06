@@ -4,62 +4,6 @@ import Link from "next/link";
 import AOS from "aos";
 import "aos/dist/aos.css";
 const releasesUrl = "https://github.com/RuanMingze/Sylphplay/releases";
-const downloads = [
-  [
-    "Windows",
-    "x64",
-    "https://gh-proxy.com/https://github.com/RuanMingze/Sylphplay/releases/download/v1.0.2/Sylphplay-1.0.2-Windows-x64-Setup.exe",
-    "",
-  ],
-  [
-    "Windows",
-    "ia32",
-    "https://gh-proxy.com/https://github.com/RuanMingze/Sylphplay/releases/download/v1.0.2/Sylphplay-1.0.2-Windows-ia32-Setup.exe",
-    "2",
-  ],
-  [
-    "macOS",
-    "arm64",
-    "https://gh-proxy.com/https://github.com/RuanMingze/Sylphplay/releases/download/v1.0.2/Sylphplay-1.0.2-macOS-arm64-Setup.dmg",
-    "",
-  ],
-  [
-    "macOS",
-    "x64",
-    "https://gh-proxy.com/https://github.com/RuanMingze/Sylphplay/releases/download/v1.0.2/Sylphplay-1.0.2-macOS-x64-Setup.dmg",
-    "",
-  ],
-  [
-    "Linux",
-    "deb",
-    "https://gh-proxy.com/https://github.com/RuanMingze/Sylphplay/releases/download/v1.0.2/Sylphplay-1.0.2-Linux-amd64-linux.deb",
-    "3",
-  ],
-  [
-    "Linux",
-    "rpm",
-    "https://gh-proxy.com/https://github.com/RuanMingze/Sylphplay/releases/download/v1.0.2/Sylphplay-1.0.2-Linux-x86_64-linux.rpm",
-    "3",
-  ],
-  [
-    "Linux",
-    "AppImage",
-    "https://gh-proxy.com/https://github.com/RuanMingze/Sylphplay/releases/download/v1.0.2/Sylphplay-1.0.2-Linux-x86_64-linux.AppImage",
-    "3",
-  ],
-  [
-    "Android",
-    "APK",
-    "https://gh-proxy.com/https://github.com/RuanMingze/Sylphplay/releases/download/v1.0.2/Sylphplay-1.0.2-Android.apk",
-    "",
-  ],
-  [
-    "iOS",
-    "IPA",
-    "https://gh-proxy.com/https://github.com/RuanMingze/Sylphplay/releases/download/v1.0.2/Sylphplay-1.0.2-iOS.ipa",
-    "4",
-  ],
-];
 function Arrow() {
   return <span aria-hidden="true">↗</span>;
 }
@@ -275,12 +219,12 @@ export default function Page() {
           <a href="#feedback" className="hover:text-[#151515]">
             反馈
           </a>
-          <a href="#download" className="hover:text-[#151515]">
+          <a href="/download" className="hover:text-[#151515]">
             下载
           </a>
         </div>
         <a
-          href="#download"
+          href="/download"
           className="hidden rounded-full bg-[#191919] px-5 py-2.5 text-sm font-medium text-white transition-transform hover:-translate-y-1 md:block"
         >
           立即下载 <Arrow />
@@ -298,7 +242,7 @@ export default function Page() {
           <div className="flex flex-col gap-4 text-sm">
             <a href="#features">功能</a>
             <a href="#preview">界面</a>
-            <a href="#download">下载</a>
+            <a href="/download">下载</a>
           </div>
         </div>
       )}
@@ -337,7 +281,7 @@ export default function Page() {
           </p>
           <div className="mt-10 flex flex-wrap gap-3">
             <a
-              href="#download"
+              href="/download"
               className="rounded-full bg-[#191919] px-6 py-3.5 text-sm font-medium text-white transition-transform hover:-translate-y-1"
             >
               下载 Sylphplay <Arrow />
@@ -558,45 +502,23 @@ export default function Page() {
               由你来播放。
             </h2>
           </div>
-          <div className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
-            {downloads.map(([name, meta, url, note], index) => (
-              <a
-                key={name}
-                href={url}
-                data-aos="fade-up"
-                data-aos-delay={index * 70}
-                className="group rounded-2xl bg-white/10 p-5 text-white transition-colors hover:bg-white hover:text-[#191919]"
-              >
-                <span className="flex items-center justify-between text-xs opacity-60">
-                  <span>0{index + 1}</span>
-                  <Arrow />
-                </span>
-                <strong className="mt-10 block text-lg">{name}</strong>
-                <span className="mt-1 block text-xs opacity-60">
-                  {meta} · v1.0.2
-                  {note && (
-                    <sup className="ml-1 font-bold" aria-label={`脚注 ${note}`}>
-                      {note}
-                    </sup>
-                  )}
-                </span>
-              </a>
-            ))}
-          </div>
-          <div className="mt-8 flex flex-wrap items-center gap-4">
+          <div className="mt-10 flex flex-wrap items-center gap-4" data-aos="fade-up" data-aos-delay="80">
+            <a
+              href="/download"
+              className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3.5 text-sm font-medium text-[#ef5f18] transition-transform hover:-translate-y-1"
+            >
+              前往下载页 ↗
+            </a>
             <a
               href={releasesUrl}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3.5 text-sm font-medium text-[#ef5f18] transition-transform hover:-translate-y-1"
+              className="inline-flex items-center gap-2 rounded-full border border-white/40 px-6 py-3.5 text-sm font-medium text-white transition-colors hover:bg-white/10"
             >
-              查看全部版本 Releases <Arrow />
+              GitHub Releases
             </a>
-            <span
-              className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-white/20 text-xs font-bold text-white"
-              aria-label="脚注 2"
-            >
-              2
+            <span className="text-sm text-white/70">
+              v1.0.2 · Windows x64 / 32-bit · macOS Intel / Apple Silicon · Linux deb / rpm / AppImage · Android · iOS
             </span>
           </div>
         </div>
