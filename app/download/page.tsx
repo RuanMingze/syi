@@ -9,12 +9,20 @@ const GH = (path: string) =>
   `https://gh-proxy.com/https://github.com/RuanMingze/Sylphplay/releases/download/v1.0.2/${path}`;
 
 type Build = { label: string; url: string; suffix?: string };
+type AltBuild = {
+  key: string;
+  label: string;
+  hint?: string;
+  url: string;
+  suffix?: string;
+};
 type Platform = {
   id: string;
   name: string;
   subtitle: string;
   main: Build;
   extras?: Build[];
+  alternatives?: AltBuild[]; // Linux 三种格式平级
   note?: string;
   badge?: string;
 };
@@ -62,24 +70,37 @@ const platforms: Platform[] = [
     id: "linux",
     name: "Linux",
     subtitle: "x86_64 内核 4.15+",
-    badge: "任选其一",
+    // 三种格式平级，主副按钮由用户选择驱动
     main: {
       label: "AppImage · 通用",
       url: GH("Sylphplay-1.0.2-Linux-x86_64-linux.AppImage"),
       suffix: ".AppImage · 131 MB",
     },
-    extras: [
+    alternatives: [
       {
-        label: "deb · Debian / Ubuntu",
+        key: "deb",
+        label: "deb",
+        hint: "Debian / Ubuntu / Mint",
         url: GH("Sylphplay-1.0.2-Linux-amd64-linux.deb"),
         suffix: ".deb · 93 MB",
       },
       {
-        label: "rpm · Fedora / RHEL / openSUSE",
+        key: "rpm",
+        label: "rpm",
+        hint: "Fedora / RHEL / openSUSE",
         url: GH("Sylphplay-1.0.2-Linux-x86_64-linux.rpm"),
         suffix: ".rpm · 92 MB",
       },
+      {
+        key: "appimage",
+        label: "AppImage",
+        hint: "通吃发行版，双击即跑",
+        url: GH("Sylphplay-1.0.2-Linux-x86_64-linux.AppImage"),
+        suffix: ".AppImage · 131 MB",
+      },
     ],
+    note:
+      "浏览器无法识别 Linux 发行版，按需选择。AppImage 最省心，deb / rpm 适合系统包管理器。",
   },
   {
     id: "android",
@@ -125,10 +146,17 @@ function detectOS(): string | null {
 function PlatformCard({
   p,
   recommended,
+  linuxSelected,
+  onLinuxSelect,
 }: {
   p: Platform;
   recommended: boolean;
+  linuxSelected?: string;
+  onLinuxSelect?: (key: string) => void;
 }) {
+  // Linux：三格式平级，选中项加推荐标识
+  const isLinux = !!p.alternatives;
+
   return (
     <section
       id={p.id}
@@ -156,40 +184,109 @@ function PlatformCard({
           )}
         </div>
       </header>
-      <a
-        href={p.main.url}
-        className="block rounded-xl bg-[#191919] px-5 py-4 text-left text-white"
-      >
-        <div className="flex items-center justify-between gap-3">
-          <div>
-            <div className="text-sm font-semibold">{p.main.label}</div>
-            {p.main.suffix && (
-              <div className="mt-0.5 text-xs text-white/60">
-                {p.main.suffix}
-              </div>
-            )}
-          </div>
-          <span className="text-lg leading-none opacity-60">↓</span>
-        </div>
-      </a>
-      {p.extras && p.extras.length > 0 && (
-        <ul className="mt-3 space-y-2">
-          {p.extras.map((e) => (
-            <li key={e.label}>
-              <a
-                href={e.url}
-                className="flex items-center justify-between gap-3 rounded-lg border border-black/10 bg-white px-4 py-2.5 text-sm text-[#716e68]"
-              >
-                <span>{e.label}</span>
-                {e.suffix && (
-                  <span className="shrink-0 text-xs text-[#8d8982]">
-                    {e.suffix}
-                  </span>
+
+      {/* Linux 三格式平级 */}
+      {isLinux && p.alternatives ? (
+        <div className="space-y-2">
+          {p.alternatives.map((alt) => {
+            const selected = linuxSelected === alt.key;
+            return (
+              <div key={alt.key}>
+                <div className="flex items-center justify-between gap-3">
+                  <button
+                    onClick={() => onLinuxSelect?.(alt.key)}
+                    className={`w-full rounded-xl border px-5 py-4 text-left ${
+                      selected
+                        ? "border-[#ef5f18] bg-[#ef5f18] text-white"
+                        : "border-black/10 bg-[#faf9f7] text-[#151515]"
+                    }`}
+                  >
+                    <div className="flex items-center justify-between gap-3">
+                      <div>
+                        <div className="text-sm font-semibold">
+                          {alt.label}
+                        </div>
+                        {alt.hint && (
+                          <div
+                            className={`mt-0.5 text-xs ${
+                              selected
+                                ? "text-white/75"
+                                : "text-[#8d8982]"
+                            }`}
+                          >
+                            {alt.hint}
+                          </div>
+                        )}
+                      </div>
+                      {alt.suffix && (
+                        <span
+                          className={`shrink-0 text-xs ${
+                            selected
+                              ? "text-white/75"
+                              : "text-[#8d8982]"
+                          }`}
+                        >
+                          {alt.suffix}
+                        </span>
+                      )}
+                    </div>
+                  </button>
+                  {selected && (
+                    <span className="shrink-0 rounded-full bg-[#ef5f18] px-2.5 py-1 text-[11px] font-medium text-white">
+                      推荐
+                    </span>
+                  )}
+                </div>
+                {selected && (
+                  <a
+                    href={alt.url}
+                    className="mt-2 block w-full rounded-lg bg-[#191919] px-4 py-2.5 text-center text-sm font-medium text-white"
+                  >
+                    立即下载 {alt.label} ↓
+                  </a>
                 )}
-              </a>
-            </li>
-          ))}
-        </ul>
+              </div>
+            );
+          })}
+        </div>
+      ) : (
+        <>
+          <a
+            href={p.main.url}
+            className="block rounded-xl bg-[#191919] px-5 py-4 text-left text-white"
+          >
+            <div className="flex items-center justify-between gap-3">
+              <div>
+                <div className="text-sm font-semibold">{p.main.label}</div>
+                {p.main.suffix && (
+                  <div className="mt-0.5 text-xs text-white/60">
+                    {p.main.suffix}
+                  </div>
+                )}
+              </div>
+              <span className="text-lg leading-none opacity-60">↓</span>
+            </div>
+          </a>
+          {p.extras && p.extras.length > 0 && (
+            <ul className="mt-3 space-y-2">
+              {p.extras.map((e) => (
+                <li key={e.label}>
+                  <a
+                    href={e.url}
+                    className="flex items-center justify-between gap-3 rounded-lg border border-black/10 bg-white px-4 py-2.5 text-sm text-[#716e68]"
+                  >
+                    <span>{e.label}</span>
+                    {e.suffix && (
+                      <span className="shrink-0 text-xs text-[#8d8982]">
+                        {e.suffix}
+                      </span>
+                    )}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
+        </>
       )}
       {p.note && (
         <p className="mt-4 rounded-lg border border-black/10 bg-[#faf9f7] px-3 py-2 text-xs leading-relaxed text-[#8d8982]">
@@ -202,16 +299,31 @@ function PlatformCard({
 
 export default function DownloadPage() {
   const [currentOS, setCurrentOS] = useState<string | null>(null);
+  // Linux 发行版格式选择（浏览器 UA 无法识别 Linux 发行版，让用户点选 + 记住）
+  const [linuxFormat, setLinuxFormat] = useState<string>("appimage");
 
-useEffect(() => {
-  setCurrentOS(detectOS());
-}, []);
+  useEffect(() => {
+    setCurrentOS(detectOS());
+    try {
+      const saved = localStorage.getItem("sylph:linux-format");
+      if (saved && ["deb", "rpm", "appimage"].includes(saved)) {
+        setLinuxFormat(saved);
+      }
+    } catch {}
+  }, []);
 
-const ordered = [...platforms].sort((a, b) => {
-  if (a.id === currentOS) return -1;
-  if (b.id === currentOS) return 1;
-  return 0;
-});
+  const onLinuxSelect = (key: string) => {
+    setLinuxFormat(key);
+    try {
+      localStorage.setItem("sylph:linux-format", key);
+    } catch {}
+  };
+
+  const ordered = [...platforms].sort((a, b) => {
+    if (a.id === currentOS) return -1;
+    if (b.id === currentOS) return 1;
+    return 0;
+  });
 
   return (
     <main className="min-h-screen bg-[#f5f3ef] text-[#151515]">
@@ -278,6 +390,8 @@ const ordered = [...platforms].sort((a, b) => {
               key={p.id}
               p={p}
               recommended={currentOS === p.id}
+              linuxSelected={p.id === "linux" ? linuxFormat : undefined}
+              onLinuxSelect={p.id === "linux" ? onLinuxSelect : undefined}
             />
           ))}
         </div>
