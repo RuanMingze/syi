@@ -205,9 +205,15 @@ function PlatformCard({
 export default function DownloadPage() {
   const [currentOS, setCurrentOS] = useState<string | null>(null);
 
-  useEffect(() => {
-    setCurrentOS(detectOS());
-  }, []);
+useEffect(() => {
+  setCurrentOS(detectOS());
+}, []);
+
+const ordered = [...platforms].sort((a, b) => {
+  if (a.id === currentOS) return -1;
+  if (b.id === currentOS) return 1;
+  return 0;
+});
 
   return (
     <main className="min-h-screen bg-[#f5f3ef] text-[#151515]">
@@ -258,7 +264,7 @@ export default function DownloadPage() {
           </p>
         </div>
         <nav className="mb-10 flex flex-wrap gap-2">
-          {platforms.map((p) => (
+          {ordered.map((p) => (
             <a
               key={p.id}
               href={`#${p.id}`}
@@ -269,7 +275,7 @@ export default function DownloadPage() {
           ))}
         </nav>
         <div className="grid gap-5 md:grid-cols-2">
-          {platforms.map((p) => (
+          {ordered.map((p) => (
             <PlatformCard
               key={p.id}
               p={p}
