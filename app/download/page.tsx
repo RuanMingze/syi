@@ -132,10 +132,10 @@ function PlatformCard({
   return (
     <section
       id={p.id}
-      className={`group relative rounded-2xl border bg-white p-6 transition hover:shadow-lg ${
+      className={`group relative rounded-2xl border bg-white p-6 ${
         recommended
           ? "border-[#ef5f18]/40"
-          : "border-black/10 hover:border-black/20"
+          : "border-black/10"
       }`}
     >
       <header className="mb-5 flex items-start justify-between gap-4">
@@ -158,7 +158,7 @@ function PlatformCard({
       </header>
       <a
         href={p.main.url}
-        className="block rounded-xl bg-[#191919] px-5 py-4 text-left text-white transition hover:bg-[#333]"
+        className="block rounded-xl bg-[#191919] px-5 py-4 text-left text-white"
       >
         <div className="flex items-center justify-between gap-3">
           <div>
@@ -169,9 +169,7 @@ function PlatformCard({
               </div>
             )}
           </div>
-          <span className="text-lg leading-none opacity-60 transition group-hover:translate-x-0.5 group-hover:opacity-100">
-            ↓
-          </span>
+          <span className="text-lg leading-none opacity-60">↓</span>
         </div>
       </a>
       {p.extras && p.extras.length > 0 && (
@@ -180,7 +178,7 @@ function PlatformCard({
             <li key={e.label}>
               <a
                 href={e.url}
-                className="flex items-center justify-between gap-3 rounded-lg border border-black/10 bg-white px-4 py-2.5 text-sm text-[#716e68] transition hover:border-black/20 hover:bg-[#faf9f7] hover:text-[#151515]"
+                className="flex items-center justify-between gap-3 rounded-lg border border-black/10 bg-white px-4 py-2.5 text-sm text-[#716e68]"
               >
                 <span>{e.label}</span>
                 {e.suffix && (
@@ -268,7 +266,7 @@ const ordered = [...platforms].sort((a, b) => {
             <a
               key={p.id}
               href={`#${p.id}`}
-              className="rounded-full border border-black/10 bg-white px-4 py-1.5 text-sm text-[#716e68] transition hover:border-black/20 hover:bg-[#faf9f7] hover:text-[#151515]"
+              className="rounded-full border border-black/10 bg-white px-4 py-1.5 text-sm text-[#716e68]"
             >
               {p.name}
             </a>
