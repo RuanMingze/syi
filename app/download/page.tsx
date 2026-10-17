@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
@@ -6,7 +6,7 @@ import Link from "next/link";
 const RELEASES_URL = "https://github.com/RuanMingze/Sylphplay/releases";
 
 const GH = (path: string) =>
-  `https://gh-proxy.com/https://github.com/RuanMingze/Sylphplay/releases/download/v1.0.2/${path}`;
+  `https://gh-proxy.com/https://github.com/RuanMingze/Sylphplay/releases/download/v1.1.0/${path}`;
 
 type Build = { label: string; url: string; suffix?: string };
 type Platform = {
@@ -27,14 +27,14 @@ const platforms: Platform[] = [
     badge: "推荐",
     main: {
       label: "Windows x64 · Setup.exe",
-      url: GH("Sylphplay-1.0.2-Windows-x64-Setup.exe"),
-      suffix: ".exe · 117 MB",
+      url: GH("Sylphplay-1.1.0-Windows-x64-Setup.exe"),
+      suffix: ".exe · 123 MB",
     },
     extras: [
       {
         label: "Windows 32 位（ia32）",
-        url: GH("Sylphplay-1.0.2-Windows-ia32-Setup.exe"),
-        suffix: ".exe · 111 MB",
+        url: GH("Sylphplay-1.1.0-Windows-ia32-Setup.exe"),
+        suffix: ".exe · 93 MB",
       },
     ],
     note:
@@ -47,14 +47,14 @@ const platforms: Platform[] = [
     badge: "Apple Silicon",
     main: {
       label: "macOS arm64（M 系列）· .dmg",
-      url: GH("Sylphplay-1.0.2-macOS-arm64-Setup.dmg"),
-      suffix: ".dmg · 113 MB",
+      url: GH("Sylphplay-1.1.0-macOS-arm64-Setup.dmg"),
+      suffix: ".dmg · 120 MB",
     },
     extras: [
       {
         label: "macOS x64（Intel）· .dmg",
-        url: GH("Sylphplay-1.0.2-macOS-x64-Setup.dmg"),
-        suffix: ".dmg · 118 MB",
+        url: GH("Sylphplay-1.1.0-macOS-x64-Setup.dmg"),
+        suffix: ".dmg · 124 MB",
       },
     ],
   },
@@ -65,19 +65,19 @@ const platforms: Platform[] = [
     badge: "任选其一",
     main: {
       label: "AppImage · 通用",
-      url: GH("Sylphplay-1.0.2-Linux-x86_64-linux.AppImage"),
-      suffix: ".AppImage · 131 MB",
+      url: GH("Sylphplay-1.1.0-Linux-x86_64-linux.AppImage"),
+      suffix: ".AppImage · 138 MB",
     },
     extras: [
       {
         label: "deb · Debian / Ubuntu",
-        url: GH("Sylphplay-1.0.2-Linux-amd64-linux.deb"),
-        suffix: ".deb · 93 MB",
+        url: GH("Sylphplay-1.1.0-Linux-amd64-linux.deb"),
+        suffix: ".deb · 98 MB",
       },
       {
         label: "rpm · Fedora / RHEL / openSUSE",
-        url: GH("Sylphplay-1.0.2-Linux-x86_64-linux.rpm"),
-        suffix: ".rpm · 92 MB",
+        url: GH("Sylphplay-1.1.0-Linux-x86_64-linux.rpm"),
+        suffix: ".rpm · 97 MB",
       },
     ],
   },
@@ -87,8 +87,8 @@ const platforms: Platform[] = [
     subtitle: "Android 8.0+",
     main: {
       label: "Android APK",
-      url: GH("Sylphplay-1.0.2-Android.apk"),
-      suffix: ".apk · 64 MB",
+      url: GH("Sylphplay-1.1.0-Android.apk"),
+      suffix: ".apk · 68 MB",
     },
   },
   {
@@ -98,8 +98,8 @@ const platforms: Platform[] = [
     badge: "未签名",
     main: {
       label: "iOS IPA",
-      url: GH("Sylphplay-1.0.2-iOS.ipa"),
-      suffix: ".ipa · 10 MB",
+      url: GH("Sylphplay-1.1.0-iOS.ipa"),
+      suffix: ".ipa · 11 MB",
     },
     note:
       "安装包未签名，需借助 AltStore、Sideloadly 等工具重签名后侧载安装。",
@@ -245,7 +245,7 @@ const ordered = [...platforms].sort((a, b) => {
             下载 <span className="text-[#ef5f18]">Sylphplay</span>
           </h1>
           <p className="mt-3 max-w-2xl text-[#6c6964]">
-            最新版本 v1.0.2，跨平台多媒体播放器。所有构建产物均通过 GitHub Actions
+            最新版本 v1.1.0，跨平台多媒体播放器。所有构建产物均通过 GitHub Actions
             自动打包，签名 / 未签名状态已在下方标注。
           </p>
           <p className="mt-2 text-xs text-[#8d8982]">
